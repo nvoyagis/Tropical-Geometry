@@ -1,9 +1,10 @@
+import random
 
-
-
-# Finds the line segments needed to construct a tropical conic given the conic's 6 coefficients
-def segments(a, b, c, d, e, f):
+# Finds the line info needed to construct a tropical conic given the conic's 6 coefficients. Also finds the conic type on a good day.
+def info(coefficients):
     case1, case2, case3, case4, case5, case6, case7, case8, case9, case10, case11, case12, case13, case14, case15 = False, False, False, False, False, False, False, False, False, False, False, False, False, False, False
+    a, b, c, d, e, f = coefficients[0], coefficients[1], coefficients[2], coefficients[3], coefficients[4], coefficients[5]
+    print(coefficients)
 
     # Case 1 & 6
     if(2 * b >= a + c): 
@@ -123,7 +124,7 @@ def segments(a, b, c, d, e, f):
         case15 = True
 
     # Case 12
-    if(2 * e <= f + c):
+    if(2 * e <= c + f):
         loc = 'x < ' + str(min((f - a) / 2, (f + c) / 2 - b, f - d))
         seg = 'y = ' + str((f - c) / 2)
         print(f'Case 12: Segment: {seg}, Location: {loc}')
@@ -159,31 +160,31 @@ def segments(a, b, c, d, e, f):
     if(case1 and case3 and case6 and case7 and case8 and case9 and case11 and case14 and case15):
         print('Conic: B3')
         return
-    if(case1 and case2 and case3 and case4 and case6 and case11 and case13 and case14 and case15):
+    if(case2 and case3 and case4 and case11 and case13 and case14 and case15):
         print('Conic: C1')
         return
-    if(case1 and case2 and case3 and case6 and case10 and case11 and case13 and case14 and case15):
+    if(case2 and case3 and case10 and case11 and case13 and case14 and case15):
         print('Conic: C2')
         return
-    if(case1 and case3 and case4 and case5 and case6 and case8 and case11 and case14 and case15):
+    if(case1 and case4 and case5 and case6 and case8 and case11 and case15):
         print('Conic: C3')
         return
-    if(case1 and case3 and case5 and case6 and case8 and case9 and case11 and case14 and case15):
+    if(case1 and case5 and case6 and case8 and case9 and case11 and case15):
         print('Conic: C4')
         return
-    if(case1 and case3 and case6 and case7 and case10 and case11 and case12 and case14 and case15):
+    if(case1 and case3 and case6 and case7 and case10 and case12 and case14):
         print('Conic: C5')
         return
-    if(case1 and case3 and case6 and case7 and case9 and case11 and case12 and case14 and case15):
+    if(case1 and case3 and case6 and case7 and case9  and case12 and case14):
         print('Conic: C6')
         return
-    if(case1 and case3 and case5 and case6 and case9 and case11 and case12 and case14 and case15):
+    if(case1 and case5 and case6 and case9 and case12):
         print('Conic: D1')
         return
-    if(case1 and case2 and case3 and case6 and case10 and case11 and case12 and case14 and case15):
+    if(case2 and case3 and case10 and case12 and case14):
         print('Conic: D2')
         return
-    if(case1 and case2 and case3 and case4 and case5 and case6 and case11 and case14 and case15):
+    if(case2 and case4 and case5 and case11 and case15):
         print('Conic: D3')
         return
     if(case1 and case3 and case6 and case8 and case11 and case13 and case14 and case15):
@@ -196,22 +197,48 @@ def segments(a, b, c, d, e, f):
         print('Conic: E3')
         return
     # Case 8 gives a single point in F1 and it is NOT true. get rid of it as a condition for F1?
-    if(case1 and case3 and case6 and case7 and case8 and case11 and case12 and case13 and case14 and case15):
+    if(case1 and case3 and case6 and case7 and case12 and case14):
         print('Conic: F1')
         return
     # Cases 7, 13 give a single point where "4 rays intersect"
-    if(case1 and case3 and case5 and case6 and case7 and case8 and case11 and case13 and case14 and case15):
+    if(case1 and case5 and case6 and case8 and case11 and case15):
         print('Conic: F2')
         return
     # Case 8 gives a single point: (1, 1) where "4 rays start"
-    if(case1 and case2 and case3 and case6 and case8 and case11 and case13 and case14 and case15):       
+    if(case2 and case3 and case11 and case13 and case14 and case15):
         print('Conic: F3')
         return
-    if(case1 and case2 and case3 and case5 and case6 and case11 and case12 and case14 and case15):
+    if(case2 and case5 and case12):
         print('Conic: G1')
         return
     print('Unknown conic')
 
+    # Case sets that refer to the same paramters (starred numbers must come together): 1, 2, 6 / 3, 5, 14 / 11, 12, 15
 
 
-segments(0, 2, 0, 0, 1, 0)
+
+
+# Presets:
+A1 = [0, 1, 0, 1, 1, 0]
+B1 = [0, 1, 0, 1, 3, 0]
+B2 = [0, 1, 0, 3, 1, 0]
+B3 = [0, 3, 0, 1, 1, 0]
+C1 = [0, 0, 0, 1, 2, 0]
+C2 = [0, 0, 0, 2, 1, 0]
+C3 = [0, 1, 0, 0, 2, 0]
+C4 = [0, 2, 0, 0, 1, 0]
+C5 = [0, 1, 0, 2, 0, 0]
+C6 = [0, 2, 0, 1, 0, 0]
+D1 = [0, 1, 0, 0, 0, 0]
+D2 = [0, 0, 0, 1, 0, 0]
+D3 = [0, 0, 0, 0, 1, 0]
+E1 = [0, 1, 0, 1, 2, 0]
+E2 = [0, 1, 0, 2, 1, 0]
+E3 = [0, 2, 0, 1, 1, 0]
+F1 = [0, 1, 0, 1, 0, 0]
+F2 = [0, 1, 0, 0, 1, 0]
+F3 = [0, 0, 0, 1, 1, 0]
+G1 = [0, 0, 0, 0, 0, 0]
+
+
+info([random.randrange(-10, 10), random.randrange(-10, 10), random.randrange(-10, 10), random.randrange(-10, 10), random.randrange(-10, 10), random.randrange(-10, 10)])
